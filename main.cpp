@@ -121,8 +121,6 @@ int main() {
 
    std::vector<const std::string*> topTen;
 
-   std::cerr << std::regex_match("Firefox Nightly", std::regex("(.*)Fi(.*)")) << std::endl;
-
    while (running) {
       if (!shown) {
          std::this_thread::sleep_for(snappiness);
@@ -188,10 +186,8 @@ int main() {
 
                topTen.clear();
 
-               std::string buff;
                for (const auto& app : apps) {
-                  buff = app.first + " (" + app.second + ")";
-                  if (std::regex_match(buff, regex)) {
+                  if (std::regex_match(app.first, regex)) {
                      topTen.push_back(&app.first);
                   }
                }
