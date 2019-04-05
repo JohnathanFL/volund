@@ -10,9 +10,12 @@ struct INIFile {
    Section&    operator[](const std::string& i) { return sections[i]; }
 
    static void trim(std::string& str) {
+      if (str.empty())
+         return;
+
       static std::string spaces = " \t\n";
       str                       = str.substr(str.find_first_not_of(spaces));
-      while (spaces.find(*str.rbegin()) != str.npos)
+      while (spaces.find(*str.rbegin()) < spaces.size())
          str.pop_back();
    }
 
@@ -38,8 +41,8 @@ struct INIFile {
       std::string buff;
 
       while (getline(stream, buff)) {
-          if(buff.empty())
-              continue;
+         if (buff.empty())
+            continue;
 
          if (buff[0] == '[')
             curSection = parseSectionHeader(buff);
