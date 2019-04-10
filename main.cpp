@@ -26,6 +26,14 @@ bool shown             = true;
 void signalHandler(int sigNum) { shown = !shown; }
 
 int main() {
+    auto newSnappiness = std::getenv("VOLUND_SNAPPINESS");
+    if(newSnappiness) {
+      snappiness = std::chrono::duration<long double, std::milli>(std::stof(newSnappiness));
+     std::cerr << "Read snappiness from VOLUND_SNAPPINESS as " << snappiness.count() << std::endl;
+    } else {
+      std::cerr << "$VOLUND_SNAPPINESS was not set. Defaulting to " << snappiness.count() << std::endl;
+    }
+
     signal(SIGUSR1, signalHandler);
 
     SDL_Init(SDL_INIT_EVENTS);
