@@ -15,6 +15,10 @@ public:
         addApps(db, path);
     }
 
+    void clear() {
+        db.clear();
+    }
+
     unsigned numApps() {
         return db.size();
     }
